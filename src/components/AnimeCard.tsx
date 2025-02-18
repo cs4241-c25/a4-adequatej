@@ -6,7 +6,6 @@ interface Anime {
   rating: number;
   episodes: number;
   popularityScore?: number;
-  imageUrl?: string;
 }
 
 interface AnimeCardProps {
@@ -18,15 +17,6 @@ interface AnimeCardProps {
 export default function AnimeCard({ anime, onEdit, onDelete }: AnimeCardProps) {
   return (
     <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700">
-      {anime.imageUrl && (
-        <div className="aspect-video relative">
-          <img
-            src={anime.imageUrl}
-            alt={anime.title}
-            className="w-full h-full object-cover"
-          />
-        </div>
-      )}
       <div className="p-6">
         <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">
           {anime.title}

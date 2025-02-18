@@ -7,7 +7,6 @@ interface Anime {
   title: string;
   rating: number;
   episodes: number;
-  imageUrl?: string;
 }
 
 interface RatingFormProps {
@@ -20,7 +19,6 @@ export default function RatingForm({ onSubmit, editingAnime, onCancel }: RatingF
   const [title, setTitle] = useState('');
   const [rating, setRating] = useState<string>('');
   const [episodes, setEpisodes] = useState<string>('');
-  const [imageUrl, setImageUrl] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -28,29 +26,28 @@ export default function RatingForm({ onSubmit, editingAnime, onCancel }: RatingF
       setTitle(editingAnime.title);
       setRating(editingAnime.rating.toString());
       setEpisodes(editingAnime.episodes.toString());
-      setImageUrl(editingAnime.imageUrl || '');
     } else {
       setTitle('');
       setRating('');
       setEpisodes('');
-      setImageUrl('');
     }
   }, [editingAnime]);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    try {
-      const ratingNum = Math.min(10, Math.max(1, Number(rating) || 1));
-      const episodesNum = Math.max(1, Number(episodes) || 1);
 
+    try {
       await onSubmit({
-        id: editingAnime?.id,
         title,
-        rating: ratingNum,
-        episodes: episodesNum,
-        imageUrl,
+        rating: Number(rating),
+        episodes: Number(episodes),
       });
+      if (!editingAnime) {
+        setTitle('');
+        setRating('');
+        setEpisodes('');
+      }
     } catch (error) {
       console.error('Error submitting anime:', error);
     } finally {
@@ -61,7 +58,7 @@ export default function RatingForm({ onSubmit, editingAnime, onCancel }: RatingF
   return (
     <form onSubmit={handleSubmit} className="card space-y-4 mb-8 p-6">
       <div>
-        <label htmlFor="title" className="block text-base font-medium mb-1">
+        <label htmlFor="title" className="block text-base font-medium mb-1 text-gray-900 dark:text-gray-100">
           Anime Title
         </label>
         <input
@@ -75,7 +72,7 @@ export default function RatingForm({ onSubmit, editingAnime, onCancel }: RatingF
         />
       </div>
       <div>
-        <label htmlFor="rating" className="block text-base font-medium mb-1">
+        <label htmlFor="rating" className="block text-base font-medium mb-1 text-gray-900 dark:text-gray-100">
           Rating (1-10)
         </label>
         <input
@@ -91,7 +88,7 @@ export default function RatingForm({ onSubmit, editingAnime, onCancel }: RatingF
         />
       </div>
       <div>
-        <label htmlFor="episodes" className="block text-base font-medium mb-1">
+        <label htmlFor="episodes" className="block text-base font-medium mb-1 text-gray-900 dark:text-gray-100">
           Number of Episodes
         </label>
         <input
@@ -103,19 +100,6 @@ export default function RatingForm({ onSubmit, editingAnime, onCancel }: RatingF
           className="input-field"
           required
           placeholder="Enter number of episodes"
-        />
-      </div>
-      <div>
-        <label htmlFor="imageUrl" className="block text-base font-medium mb-1">
-          Image URL (optional)
-        </label>
-        <input
-          type="url"
-          id="imageUrl"
-          value={imageUrl}
-          onChange={(e) => setImageUrl(e.target.value)}
-          className="input-field"
-          placeholder="Enter image URL (optional)"
         />
       </div>
       <div className="flex gap-2">
