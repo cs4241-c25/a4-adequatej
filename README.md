@@ -2,7 +2,7 @@
 
 A web application that allows users to track and rate anime series. Users can add, edit, and delete anime entries, with each entry containing a title, rating, and number of episodes. The system automatically calculates a popularity score based on these metrics.
 
-Vercel link:
+Vercel link: https://a4-adequatej-git-main-jed-geoghegans-projects.vercel.app
 
 ## Changes from Assignment 3:
 - Migrated from vanilla JavaScript to TypeScript for better type safety and developer experience (also just want to get better at TypeScript)
