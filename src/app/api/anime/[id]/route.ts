@@ -71,8 +71,8 @@ export async function PATCH(
 }
 
 export async function DELETE(
-  request: Request,
-  { params }: { params: { id: string } }
+  _request: Request,
+  context: { params: { id: string } }
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -85,7 +85,7 @@ export async function DELETE(
     const db = client.db('animedb');
     
     const result = await db.collection('animes').deleteOne({
-      _id: new ObjectId(params.id),
+      _id: new ObjectId(context.params.id),
       userId: session.user?.email,
     });
 
