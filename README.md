@@ -14,3 +14,7 @@ Vercel link:
 - Added server-side data validation and error handling through Next.js API routes
 - Implemented protected routes and user-specific data
 - Added real-time updates when modifying anime entries
+
+
+## Initial Issues:
+I had two problems with my Next.js app. First, my DELETE route wasn't working because Next.js 15.1.7 is picky about route parameters being Promises. Instead of messing with DELETE, I switched to using GET with a query parameter (_method=DELETE) since GET routes work better in this version. Second, I had my authOptions in the wrong place. Next.js 15.1.7 only wants route files to handle HTTP stuff (GET, POST, etc.), not store configuration. So I moved authOptions to its own config file and imported it where needed. Once I made these two changes, it started working!

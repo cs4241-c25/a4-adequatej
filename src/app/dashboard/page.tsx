@@ -94,16 +94,13 @@ export default function DashboardPage() {
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this anime?')) return;
-
     try {
-      const response = await fetch(`/api/anime/${id}`, {
-        method: 'DELETE',
+      const response = await fetch(`/api/anime/${id}?_method=DELETE`, {
+        method: 'GET'
       });
 
       if (!response.ok) throw new Error('Failed to delete anime');
-
-      setAnimes(animes.filter(anime => anime.id !== id));
+      await fetchAnimes();
     } catch (error) {
       console.error('Error deleting anime:', error);
     }
