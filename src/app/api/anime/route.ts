@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import clientPromise from '@/lib/mongodb';
 import { authOptions } from '../auth/[...nextauth]/route';
@@ -8,7 +8,7 @@ function calculatePopularityScore(rating: number, episodes: number): number {
   return (rating / 10 * 0.7 + Math.min(episodes / 100, 1) * 0.3) * 100;
 }
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
     
@@ -53,6 +53,7 @@ export async function POST(request: Request) {
     );
   }
 }
+
 export async function GET() {
   try {
     const session = await getServerSession(authOptions);
