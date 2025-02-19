@@ -19,7 +19,8 @@ export const authOptions: AuthOptions = {
           
           try {
             await db.collection('users').dropIndex('username_1');
-          } catch (_) {
+          } catch {
+            // ingnores error if index doesn't exist
           }
 
           const users = db.collection('users');
