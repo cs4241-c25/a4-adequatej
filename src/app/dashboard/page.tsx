@@ -16,6 +16,14 @@ interface Anime {
   imageUrl?: string;
 }
 
+interface AnimeFromDB {
+  _id: string;
+  title: string;
+  rating: number;
+  episodes: number;
+  popularityScore: number;
+}
+
 export default function DashboardPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
@@ -38,12 +46,11 @@ export default function DashboardPage() {
       const response = await fetch('/api/anime');
       if (!response.ok) throw new Error('Failed to fetch');
       const data = await response.json();
-      setAnimes(data.map((anime: any) => ({
+      setAnimes(data.map((anime: AnimeFromDB) => ({
         id: anime._id,
         title: anime.title,
         rating: anime.rating,
         episodes: anime.episodes,
-        imageUrl: anime.imageUrl,
         popularityScore: anime.popularityScore
       })));
     } catch (error) {

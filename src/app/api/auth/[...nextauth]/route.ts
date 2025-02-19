@@ -19,7 +19,7 @@ export const authOptions: AuthOptions = {
           
           try {
             await db.collection('users').dropIndex('username_1');
-          } catch (e) {
+          } catch (_) {
           }
 
           const users = db.collection('users');
